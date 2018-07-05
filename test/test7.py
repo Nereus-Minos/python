@@ -55,23 +55,24 @@ def traverseCard():
 
 	
 #主函数
-displayMenu()
-while True:
-	selection = int(select())   #必须转换成int
-
-	if selection == 1 :
-		createCard()
-	elif selection == 2 :
-		name = input("请输入要删除的姓名")
-		deleteCard(name)
-	elif selection == 3 :
-		name = input("请输入要修改的姓名")
-		updateCard(name)
-	elif selection == 4 :
-		name = input("请输入要查找的姓名")
-	elif selection == 5 :
-		traverseCard()
-	else :
-		break
+if __name__ == "__main__":
+	displayMenu()
+	while True:
+		selection = int(select())   #必须转换成int
+	
+		if selection == 1 :
+			createCard()
+		elif selection == 2 :
+			name = input("请输入要删除的姓名")
+			deleteCard(name)
+		elif selection == 3 :
+			name = input("请输入要修改的姓名")
+			updateCard(name)
+		elif selection == 4 :
+			name = input("请输入要查找的姓名")
+		elif selection == 5 :
+			traverseCard()
+		else :
+			break
 
 
