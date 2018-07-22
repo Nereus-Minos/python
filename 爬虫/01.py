@@ -25,6 +25,5 @@ request.add_header("User-Agent", user_agent)
 #得到相应的header值，第一个字母大写，其他的全部小写
 request.get_header("User-agent")
 
-response = urllib2.urlopen(request)
 
 print(response.read())
