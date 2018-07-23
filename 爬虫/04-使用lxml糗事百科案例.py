@@ -11,7 +11,7 @@ headers = {"User-Agent": "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Tri
 
 request =urllib.request.Request(url, headers = headers)
 
-# html = urllib.request.urlopen(request).read()
+html = urllib.request.urlopen(request).read()
 #
 # cleaner = Cleaner(style=True, scripts=True,page_structure=False, safe_attrs_only=False)
 #
@@ -29,6 +29,15 @@ for node in node_list:
     # username = node.xpath('./div/a/@title')[0]    ## 取不出来
     username = node.xpath('.//h2')[0].text
     print(username)
-    #取内容
+    # 取内容
+    # 先提取第一段
     content = node.xpath('.//div[@class="content"]/span')[0].text.strip()
     print(content)
+    # 如果有好几段，则处理
+    try:
+        lst = node.xpath('.//div[@class="content"]/span/br')
+        for ll in lst:
+            print(ll.tail)
+    except:
+        pass
+
