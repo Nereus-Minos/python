@@ -1,0 +1,6 @@
+1533913948971	geckodriver	INFO	geckodriver 0.21.0
+1533913948977	geckodriver	INFO	Listening on 127.0.0.1:56715
+1533913949981	mozrunner::runner	INFO	Running command: "/usr/bin/firefox" "-marionette" "-foreground" "-no-remote" "-profile" "/tmp/rust_mozprofile.1xRLrgNpw549"
+1533913954026	Marionette	INFO	Listening on port 35639
+1533913954105	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Parent 22684, Gecko_IOThread] WARNING: pipe error (111): 连接被对方重设: file /build/firefox-mWstsA/firefox-61.0.1+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
