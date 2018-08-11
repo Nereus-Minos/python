@@ -7,7 +7,7 @@ import requests
 # 解析库
 from lxml import etree
 # 存储到json
-import json
+import json1
 
 
 class ThreadCraw(threading.Thread):

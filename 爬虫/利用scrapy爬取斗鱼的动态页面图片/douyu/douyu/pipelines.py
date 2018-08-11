@@ -26,11 +26,25 @@ class DouyuImagePipeline(ImagesPipeline):
     def get_media_requests(self, item, info):
         for image_url in item['image_urls']:
             self.default_headers['referer'] = image_url
-            yield scrapy.Request(image_url, headers=self.default_headers)
+            yield scrapy.Request(image_url, headers=self.default_headers,
+                                 meta={'item': item, 'index': item['image_urls'].index(image_url)})
+            # 添加meta是为了下面重命名文件名使用
+
+    def file_path(self, request, response=None, info=None):
+        item = request.meta['item']  # 通过上面的meta传递过来item
+        index = request.meta['index']  # 通过上面的index传递过来列表中当前下载图片的下标
+
+        # 图片文件名，item['names'][index]得到名称，request.url.split('/')[-1].split('.')[-1]得到图片后缀jpg,png
+        image_guid = item['names'][index]+'.'+request.url.split('/')[-1].split('.')[-1]
+        # 图片下载目录
+        filename = u'full/{0}'.format(image_guid)
+        return filename
 
     def item_completed(self, results, item, info):
         image_paths = [x['path'] for ok, x in results if ok]
         if not image_paths:
             raise DropItem("Item contains no images")
+
         item['image_paths'] = image_paths
         return item
+

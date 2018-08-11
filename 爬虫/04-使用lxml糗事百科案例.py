@@ -5,7 +5,7 @@ from lxml import etree
 import lxml
 # from lxml.html.clean import Cleaner
 
-url = "https://www.qiushibaike.com/hot/page/2/"
+url = "https://www.qiushibaike.com/hot/page/3/"
 
 headers = {"User-Agent": "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; Trident/5.0;"}
 
@@ -18,10 +18,10 @@ html = urllib.request.urlopen(request).read()
 # cleaner.clean_html(html)
 
 # 响应返回的是字符串，解析为HTML DOM模式
-text = etree.HTML(html)
+tet = etree.HTML(html)
 
 # 返回所有段子的节点位置，contains()模糊查询方法，第一个参数是要匹配的标签，第二个参数是标签名部分内容
-node_list = text.xpath('//div[contains(@id, "qiushi_tag")]')
+node_list = tet.xpath('//div[contains(@id, "qiushi_tag")]')
 
 for node in node_list:
     # 取图片链接
@@ -32,12 +32,18 @@ for node in node_list:
     # 取内容
     # 先提取第一段
     content = node.xpath('.//div[@class="content"]/span')[0].text.strip()
-    print(content)
+    # print(content)
     # 如果有好几段，则处理
     try:
         lst = node.xpath('.//div[@class="content"]/span/br')
         for ll in lst:
-            print(ll.tail)
+            # print(ll.tail)
+            content = content + ll.tail
+            # print("+"*10)
+            # print(content)
+            # print("+" * 10)
     except:
         pass
-
+    print("*"*50)
+    print(content)
+    print("*" * 50)

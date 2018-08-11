@@ -3,12 +3,15 @@ from selenium import webdriver
 import time
 import scrapy
 from douyu.items import DouyuItem
+from scrapy.utils.project import get_project_settings
 
 
 class DouyuPictureSpider(scrapy.Spider):
     name = 'douyu_picture'
     allowed_domains = ['www.douyu.com']
     start_urls = ['https://www.douyu.com/g_yz']
+
+    IMAGES_STORE = get_project_settings().get("IMAGES_STORE")
 
     def __init__(self):
         self.browser =webdriver.Firefox()
@@ -31,17 +34,24 @@ class DouyuPictureSpider(scrapy.Spider):
                 time.sleep(0.8)  # 不然会load不完整
                 i += 1
 
-            list_imgs = self.browser.find_elements_by_xpath('//img[@class="JS_listthumb"]')
+            list_imgs = self.browser.find_element_by_xpath('//ul[@class="clearfix play-list x4"]') \
+                .find_elements_by_tag_name('li')
 
             if list_imgs:
                 item = DouyuItem()
                 imgs = []
+                names = []
+                img_paths = []
 
-                for img in list_imgs:
-                    img = img.get_attribute('src')
+                for li in list_imgs:
+                    img = li.find_element_by_xpath('.//img[@class="JS_listthumb"]').get_attribute('src')
                     imgs.append(img)
+                    name = li.find_element_by_xpath('.//span[@class="dy-name ellipsis fl"]').text
+                    names.append(name)
 
                 item['image_urls'] = imgs
+                item['names'] = names
+                item['image_paths'] = img_paths
                 yield item
 
             try:
